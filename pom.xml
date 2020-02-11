@@ -10,6 +10,7 @@
 
     <modules>
         <module>ad-eureka</module>
+        <module>ad-gateway</module>
     </modules>
 
     <packaging>pom</packaging>

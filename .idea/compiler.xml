@@ -7,12 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ad-eureka" />
+        <module name="ad-gateway" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="ad-eureka" options="-parameters" />
+      <module name="ad-eureka" options="" />
       <module name="imooc-ad-spring-cloud" options="-parameters" />
     </option>
   </component>

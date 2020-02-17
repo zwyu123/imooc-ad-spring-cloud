@@ -1,6 +1,13 @@
 package com.imooc.ad.handler;
 
+import com.imooc.ad.dump.table.AdCreativeTable;
+import com.imooc.ad.dump.table.AdPlanTable;
+import com.imooc.ad.index.DataTable;
 import com.imooc.ad.index.IndexAware;
+import com.imooc.ad.index.adplan.AdPlanIndex;
+import com.imooc.ad.index.adplan.AdPlanObject;
+import com.imooc.ad.index.creative.CreativeIndex;
+import com.imooc.ad.index.creative.CreativeObject;
 import com.imooc.ad.mysql.constant.OpType;
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,6 +17,43 @@ import lombok.extern.slf4j.Slf4j;
  * */
 @Slf4j
 public class AdLevelDataHandler {
+
+    public static void handleLevel2(AdPlanTable planTable, OpType type) {
+        AdPlanObject planObject = new AdPlanObject(
+                planTable.getId(),
+                planTable.getUserId(),
+                planTable.getPlanStatus(),
+                planTable.getStartDate(),
+                planTable.getEndDate()
+        );
+        handleBinlogEvent(
+                DataTable.of(AdPlanIndex.class),
+                planObject.getPlanId(),
+                planObject,
+                type
+        );
+    }
+
+    public static void handleLevel2(AdCreativeTable creativeTable,
+                                    OpType type) {
+
+        CreativeObject creativeObject = new CreativeObject(
+                creativeTable.getAdId(),
+                creativeTable.getName(),
+                creativeTable.getType(),
+                creativeTable.getMaterialType(),
+                creativeTable.getHeight(),
+                creativeTable.getWidth(),
+                creativeTable.getAuditStatus(),
+                creativeTable.getAdUrl()
+        );
+        handleBinlogEvent(
+                DataTable.of(CreativeIndex.class),
+                creativeObject.getAdId(),
+                creativeObject,
+                type
+        );
+    }
 
     private static <K, V> void handleBinlogEvent(
             IndexAware<K, V> index,
